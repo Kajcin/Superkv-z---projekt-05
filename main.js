@@ -135,13 +135,18 @@ const poradi = document.querySelector("#poradi")
 const otazka = document.querySelector("#otazka")
 const obrazek = document.querySelector("#obrazek")
 const moznosti = document.querySelector("#moznosti")
+
+const vysledek = document.querySelector(".vysledek")
+const kviz = document. querySelector(".kviz")
+const hodnoceni = document.querySelector("#hodnoceni")
+
 let aktualniOtazka = 0
 let mojeOdpovedi = []
 
 moznosti.addEventListener("click", priKliknutiNaOdpoved)
 
 function zobrazOtazku() {
-    poradi.textContent = "Otazka " + (aktualniOtazka + 2) + " / " + (otazky.length + 1)
+    poradi.textContent = "Otazka " + (aktualniOtazka + 1) + " / " + (otazky.length + 1)
     otazka.textContent = otazky[aktualniOtazka].otazka
     obrazek.src = "obrazky/" + otazky[aktualniOtazka].obrazek
     let odpovedi = otazky[aktualniOtazka].odpovedi
@@ -153,6 +158,7 @@ function zobrazOtazku() {
         novaPolozka.dataset.odpoved = i
         seznam.appendChild(novaPolozka)
     }
+	
     document.querySelector("#odpovedi").remove()
     moznosti.appendChild(seznam)
 }
@@ -160,13 +166,23 @@ function zobrazOtazku() {
 function priKliknutiNaOdpoved(udalost) {
 	zobrazOtazku()
     console.log(udalost.target)
+	mojeOdpovedi.push(udalost.target.textContent)
     //zaznamenani odpovedi (push)
+	console.log(mojeOdpovedi)
     aktualniOtazka++ // 0 -> 1
   
 	if (aktualniOtazka > otazky.length) {
 		zobrazVyhodnoceni();
 	}
 }
-function zobrazVyhodnoceni() {
 
+function zobrazVyhodnoceni() {
+	kviz.classList.add("display:block;")
+	vysledek.classList.remove("display")
+
+	let odpovediSeznam = document.createElement('li');
+
+	for (let i = 0; i < mojeOdpovedi.length; i++){
+		odpovediSeznam.appendChild(i);
+	}
 }
