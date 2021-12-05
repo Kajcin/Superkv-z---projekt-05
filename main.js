@@ -177,8 +177,9 @@ function priKliknutiNaOdpoved(udalost) {
 }
 
 function zobrazVyhodnoceni() {
-	kviz.classList.add("display:block;")
-	vysledek.classList.remove("display")
+	kviz.classList.add("display")
+	kviz.style.display = "block"
+	vysledek.style.display = "inline"
 
 	let odpovediSeznam = document.createElement('li');
 
