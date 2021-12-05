@@ -130,58 +130,6 @@ const otazky = [{
 		spravna: 0
 	}
 ];
-/*
-const poradi = document.querySelector("#poradi");
-const otazka = document.querySelector("#otazka");
-const obrazek = document.querySelector("#obrazek");
-const moznosti = document.querySelector("#moznosti");
-
-let aktualniOtazka = 0
-let mojeOdpovedi = []
-
-moznosti.addEventListener("click", priKLiknutiNaOdpoved)
-
-function zobrazOtazku () {
-	poradi.textContent = "Otázka " + (aktualniOtazka + 1) + " / " + (1 + otazky.length)
-	otazka.textContent = otazky[aktualniOtazka].otazka
-	obrazek.src = "obrazky/" + otazky[aktualniOtazka].obrazek
-
-	let odpovedi = otazky[aktualniOtazka].odpovedi
-
-	let seznam = document.createElement('ul');
-	seznam.id = "odpovedi" //aby to mělo stejný design jako předtím, jelikož generujeme ul od znovu
-	for (let i = 0; i <odpovedi.length; i++) {
-		let novaPolozka = document.createElement('li')
-		novaPolozka.textContent = odpovedi[i]
-		novaPolozka.dataset.odpoved = i
-		seznam.appendChild(novaPolozka)
-	}
-	document.querySelector("#odpovedi").remove()   //odchytíme si id odpovědi a využijeme fci remove k odstranění pův odpovědí
-	moznosti.appendChild(seznam);				   //a na dalším řádku tam hned vypíšeme ty nové
-}
-
-function priKLiknutiNaOdpoved (event) {
-	zobrazOtazku ();
-	console.log(event.target)
-	let odpoved = 
-
-	mojeOdpovedi.push(event.target) // pri kliknuti budeme potřebovat zaznamenat odpoveď (využít push()) a něco s pars (prý 1. nebo 2. lekce)
-
-	console.log(mojeOdpovedi)
-
-	aktualniOtazka++ //aby tam místo věcí z prvního objektu byly věci z druhého objektu - zvyšujeme akt.ot. o 1
-
-	zobrazOtazku();
-
-	if (aktualniOtazka > otazky.length) {
-		zobrazVyhodnoceni()
-	}
-	//na konci hodit podmínku, že pokdu jsme na poslední otázce, tak nás to hodí na vyhodnocení → zobrazVyhodnoceni()
-}
-
-function zobrazVyhodnoceni () {
-	// co nám vyhodí závěrčnou ifnormai, že jsme měli správně 2/4 otázek apod.
-}*/
 
 const poradi = document.querySelector("#poradi")
 const otazka = document.querySelector("#otazka")
