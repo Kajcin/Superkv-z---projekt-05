@@ -100,6 +100,15 @@ BONUSY:
 // otazky[0].odpovedi[1] → pro zobrazení mončičáka
 
 const otazky = [{
+	otazka: 'Zrcadlo, kdo je na světě nejkrásnější?',
+	obrazek: 'snehurka.jpg',
+	odpovedi: [
+		'Ledová královna',
+		'Sněhurka',
+		'Já! Já jsem nejkrásnější.'
+	],
+	spravna: 1
+},	{
 		otazka: 'Co je ikonická hračka z 80. let?',
 		obrazek: 'moncicak.jpg',
 		odpovedi: [
@@ -125,7 +134,7 @@ const otazky = [{
 		obrazek: 'pivo.jpg',
 		odpovedi: [
 			'Umět JavaScript',
-			'Chodit po kurzu do hospody',
+			'Chodit po kurzu do hospody'
 		],
 		spravna: 0
 	}
@@ -140,19 +149,39 @@ const vysledek = document.querySelector(".vysledek")
 const kviz = document. querySelector(".kviz")
 const hodnoceni = document.querySelector("#hodnoceni")
 
-let aktualniOtazka = 0
+let aktualniOtazka = 1
 let mojeOdpovedi = []
 
 moznosti.addEventListener("click", priKliknutiNaOdpoved)
+function priKliknutiNaOdpoved(udalost) {
+
+	if (aktualniOtazka >= otazky.length) {
+		mojeOdpovedi.push(udalost.target.textContent);
+		kviz.style.display = "none";
+		zobrazVyhodnoceni();
+	}else{
+		zobrazOtazku();
+		console.log(udalost.target);
+	mojeOdpovedi.push(udalost.target.textContent);
+    //zaznamenani odpovedi (push)
+	console.log(mojeOdpovedi);
+    aktualniOtazka++
+	}
+	//zobrazOtazku();
+     // 0 -> 1
+  
+	
+}
 
 function zobrazOtazku() {
-    poradi.textContent = "Otazka " + (aktualniOtazka + 1) + " / " + (otazky.length + 1)
+    poradi.textContent = "Otazka " + (aktualniOtazka + 1) + " / " + (otazky.length)
     otazka.textContent = otazky[aktualniOtazka].otazka
     obrazek.src = "obrazky/" + otazky[aktualniOtazka].obrazek
     let odpovedi = otazky[aktualniOtazka].odpovedi
     let seznam = document.createElement('ul')
     seznam.id = "odpovedi"
-    for(let i = 0; i < odpovedi.length; i++) {
+    
+	for(let i = 0; i < odpovedi.length; i++) {
         let novaPolozka = document.createElement('li')
         novaPolozka.textContent = odpovedi[i]
         novaPolozka.dataset.odpoved = i
@@ -163,27 +192,43 @@ function zobrazOtazku() {
     moznosti.appendChild(seznam)
 }
 
-function priKliknutiNaOdpoved(udalost) {
-	zobrazOtazku()
-    console.log(udalost.target)
-	mojeOdpovedi.push(udalost.target.textContent)
-    //zaznamenani odpovedi (push)
-	console.log(mojeOdpovedi)
-    aktualniOtazka++ // 0 -> 1
-  
-	if (aktualniOtazka > otazky.length) {
-		zobrazVyhodnoceni();
-	}
-}
-
 function zobrazVyhodnoceni() {
-	kviz.classList.add("display")
-	kviz.style.display = "block"
-	vysledek.style.display = "inline"
 
-	let odpovediSeznam = document.createElement('li');
+	vysledek.style.display = "block";
+	console.log(mojeOdpovedi)
+
+	let pocetSpravnych= 0
 
 	for (let i = 0; i < mojeOdpovedi.length; i++){
-		odpovediSeznam.appendChild(i);
+		let nadpis = document.createElement("h3")
+		let tvojeOdpoved = document.createElement("p");
+		let spravnaOdpoved = document.createElement("p");
+		let odpovedelJsiSpravne = document.createElement("p");
+
+		nadpis.textContent = otazky[i].otazka;
+		tvojeOdpoved.textContent = "Tvá odpověď: " + mojeOdpovedi[i];
+		let spravnaOdpovedIndex = otazky[i].spravna
+		
+		spravnaOdpoved.textContent = "Správná odpověď: " + otazky[i].odpovedi[spravnaOdpovedIndex]
+		if (mojeOdpovedi[i] === otazky[i].odpovedi[otazky[i].spravna] )
+		{
+			pocetSpravnych++
+			odpovedelJsiSpravne.textContent = "Odpověděl(a) jsi správně.";
+		}else{
+			odpovedelJsiSpravne.textContent = "Odpověděl(a) jsi špatně.";
+		}
+
+		hodnoceni.appendChild(nadpis)
+		hodnoceni.appendChild(tvojeOdpoved)
+		hodnoceni.appendChild(spravnaOdpoved)
+		hodnoceni.appendChild(odpovedelJsiSpravne)
+
+		
 	}
+
+	let procenta = document.createElement("h2")
+		procenta.textContent = "Počet správných odpovědí byl " + pocetSpravnych + " ze " + otazky.length  + " . Tvá úspěšnost je " + ((pocetSpravnych/otazky.length)*100) + "% ."
+
+		hodnoceni.appendChild(procenta);
+
 }
